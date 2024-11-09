@@ -8,7 +8,6 @@ Welcome to the Image Conversational Chatbot project, a visual question-answering
 - [Overview](#overview)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Dataset](#dataset)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
