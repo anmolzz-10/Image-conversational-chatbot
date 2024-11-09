@@ -9,7 +9,7 @@ import cohere
 app = Flask(__name__)
 
 # Initialize Cohere API
-cohere_client = cohere.Client('33IifBRNSvTtkJuvh5KstZ72lThUH7YV7oiVGEzy')  # Replace with your key
+cohere_client = cohere.Client('your API key')  # Replace with your key
 
 # Upload folder
 UPLOAD_FOLDER = 'static/uploads'
