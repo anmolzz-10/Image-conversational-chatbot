@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Conversational Chatbot</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+<h2>Image Conversational Chatbot</h2>
+<div id="chat-window"></div>
+
+<div id="input-area">
+    <input type="file" id="image-input" accept="image/*">
+    <input type="text" id="question" placeholder="Ask a question about the image...">
+    <button onclick="sendQuestion()">Send</button>
+</div>
+
+<script>
+    function displayMessage(text, sender) {
+        const chatWindow = document.getElementById("chat-window");
+        const message = document.createElement("div");
+        message.className = `message ${sender}`;
+        message.textContent = text;
+        chatWindow.appendChild(message);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function sendQuestion() {
+        const questionInput = document.getElementById("question");
+        const imageInput = document.getElementById("image-input");
+
+        if (!imageInput.files[0]) {
+            alert("Please upload an image first.");
+            return;
+        }
+        if (!questionInput.value) {
+            alert("Please enter a question.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("image", imageInput.files[0]);
+        formData.append("question", questionInput.value);
+
+        displayMessage(questionInput.value, "user");
+        questionInput.value = "";
+
+        fetch("/ask", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                displayMessage(data.response, "bot");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Error sending question.");
+        });
+    }
+</script>
+
+</body>
+</html>
